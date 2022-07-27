@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=fyrewatchai
+POSTGRES_USER=dFStPoDiZmxfaEEMsTjImoKmefGfiNOt
+POSTGRES_PASSWORD=N90UKF4CsG99bJaZk2TWgSiWqJYVkmyiSYVfLo3XKIhK7pRgVv15knzBPoirc82R
