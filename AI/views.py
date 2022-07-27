@@ -68,9 +68,9 @@ class AIClassificationView(View):
             Final_url = (
                 base_url + "appid=" + API_key + "&lat=" + str(lat) + "&lon=" + str(lon)
             )
-            print(Final_url)
+           
             weather_data = requests.get(Final_url).json()
-            print(weather_data)
+           
             # weather data
             temp = "%.1f" % ((weather_data["main"]["temp"]) - 273)
             wind_speed = "%.1f" % ((weather_data["wind"]["speed"]) * 3.6)
@@ -88,7 +88,7 @@ class AIClassificationView(View):
             response = requests.request(
                 "GET", url, headers=headers, params=querystring
             ).json()
-            print(response)
+          
             soil_temp = response["data"][0]["soil_temperature"]
             soil_moist = response["data"][0]["soil_moisture"]
 
@@ -126,9 +126,7 @@ class AIClassificationView(View):
             KmeansG = rgb_list[1]
             kmeansB = rgb_list[2]
 
-            print(kmeansR)
-            print(KmeansG)
-            print(kmeansB)
+            
             data_labels_row = "SoilMoisture, SoilTemperature, Temperature, Wind Speed, Humidity, kmeansr, kmeansg, kmeansb"
 
             # write data to csv file
@@ -161,9 +159,8 @@ class AIClassificationView(View):
             X = obj.fit_transform(X)
             model = keras.models.load_model("AI/model_deployment.h5")
             y_pred = model.predict(X)
-            print(y_pred)
+            
             for prediction in y_pred:
-                print(prediction)
                 if prediction > 0.96:
                     status = "Danger: Risk of Fire"
                     messages.warning(
