@@ -157,5 +157,6 @@ virtualenv==20.16.1
 watchdog==2.1.9
 wcwidth==0.2.5
 Werkzeug==2.0.3
+whitenoise==6.2.0
 wrapt==1.14.1
 zipp==3.8.1
