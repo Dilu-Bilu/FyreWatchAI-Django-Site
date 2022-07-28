@@ -8,7 +8,7 @@ import cv2
 import keras
 import numpy as np
 import pandas as pd
-import PIL
+# import PIL
 import requests
 import tensorflow as tf
 from django.contrib import messages
