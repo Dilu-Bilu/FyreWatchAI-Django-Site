@@ -10,7 +10,6 @@ import numpy as np
 import pandas as pd
 # import PIL
 import requests
-import tensorflow as tf
 from django.contrib import messages
 from django.core.files.storage import default_storage
 from django.shortcuts import render
