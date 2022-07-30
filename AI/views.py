@@ -21,7 +21,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from .forms import FyreForm
 
-
+#do something
 # Create your views here.
 class AIClassificationView(View):
     template_name = "pages/home.html"
