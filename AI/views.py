@@ -237,7 +237,7 @@ class AIInputView(View):
             y_pred = model.predict(X)
             prediction = 0
             li = []
-            print(y_pred)
+            
             for prediction in y_pred:
                 if prediction[0] > 0.96:
                     status = "Danger: Risk of Fire"
@@ -251,10 +251,10 @@ class AIInputView(View):
                     status = "try something else"
                     messages.success(self.request, "something is up")
                 li.append(prediction[0])
-                print(prediction)
+                
 
             prediction = li[0]
-            print(prediction)
+            
             context = {
                 "form": form,
                 "status": status,
