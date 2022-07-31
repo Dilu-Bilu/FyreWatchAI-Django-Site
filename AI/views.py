@@ -19,7 +19,7 @@ from keras.models import load_model
 from sklearn.cluster import KMeans
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from .forms import FyreForm
+from .forms import FyreForm, InputForm
 
 #do something
 # Create your views here.
@@ -174,6 +174,91 @@ class AIClassificationView(View):
             context = {
                 "form": form,
                 "status": status,
+            }
+
+        else:
+            status = "Your Form failed"
+            context = {
+                "form": form,
+                "status": status,
+            }
+        return render(request, self.template_name, context)
+
+class AIInputView(View):
+    template_name = 'pages/input.html'
+    def get(self, request, *args, **kwargs):
+        form = InputForm()
+        context = {"form": form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = InputForm(request.POST)
+        if form.is_valid():        
+            soil_moist = form.cleaned_data.get('Soil_moisture')
+            soil_temp = form.cleaned_data.get('Soil_temp')
+            temp = form.cleaned_data.get('Temp')
+            wind_speed = form.cleaned_data.get('Wind')
+            humidity = form.cleaned_data.get('Humidity')
+            kmeansR = form.cleaned_data.get('kmeansR')
+            kmeansG = form.cleaned_data.get('kmeansG')
+            kmeansB = form.cleaned_data.get('kmeansB')
+    
+            data_labels_row = "SoilMoisture, SoilTemperature, Temperature, Wind Speed, Humidity, kmeansr, kmeansg, kmeansb"
+
+            # write data to csv file
+            with open("weather_data2.csv", mode="w") as file:
+                writer = csv.writer(
+                    file, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL
+                )
+                writer.writerows([data_labels_row])
+                writer.writerow(
+                    [
+                        soil_moist,
+                        soil_temp,
+                        temp,
+                        wind_speed,
+                        humidity,
+                        kmeansR,
+                        kmeansG,
+                        kmeansB,
+                    ]
+                )
+                # writer.writerow([0.071, 3.33, 6.38, 11.18, 85, 220, 191, 188])
+
+            # neural network
+            dataset = pd.read_csv("weather_data2.csv")
+            dataset.head()
+            X = dataset.iloc[:, 0:8]
+            Y = dataset.iloc[:, 1]
+            X.head()
+            obj = StandardScaler()
+            X = obj.fit_transform(X)
+            model = keras.models.load_model("AI/model_deployment.h5")
+            y_pred = model.predict(X)
+            prediction = 0
+            li = []
+            print(y_pred)
+            for prediction in y_pred:
+                if prediction[0] > 0.96:
+                    status = "Danger: Risk of Fire"
+                    messages.warning(
+                        self.request, "High Risk Of Wild Fire | Action is advised"
+                    )
+                elif prediction[0] < 0.96:
+                    status = "Low Danger: Low Risk of Fire"
+                    messages.success(self.request, "Everything is alright!")
+                else:
+                    status = "try something else"
+                    messages.success(self.request, "something is up")
+                li.append(prediction[0])
+                print(prediction)
+
+            prediction = li[0]
+            print(prediction)
+            context = {
+                "form": form,
+                "status": status,
+                "prediction": prediction,
             }
 
         else:

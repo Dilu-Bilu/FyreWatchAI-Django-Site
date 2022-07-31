@@ -5,20 +5,23 @@
 
 
         <div class ='col pt-5 mt-5'>
-            <H5> Fire Awareness with AI</H5>
-            <h1 class="display-1" >FyreWatchAI</h1>
-            <h2 class="text-muted">Analyse the risk of fires by uploading the coordinates and NDVI image of the desired area. The AI will analyse and provide a report on the relative risk.</h2>
+            <H5> Input The Raw Values in This Form</H5>
             <div class= 'container pt-4 p-0'>
             <form  action = "." method = "POST" enctype = 'multipart/form-data'> {% csrf_token%}
                 {{ form.as_p}}
                 <input class ='btn btn-primary btn-lg btn-block'type = "submit" value = "Analyse"/>
+            </form>
+        
+           
+            
+            </div>
+        </div>
+        <div class = 'container'>
             {% if prediction %}
-                <h1> The prediction certainty was: {{prediction}}</h1>
+            <h1> Your prediction is : {{prediction}}</h1> 
+            
             {% endif %}
+            {{status}}
         </div>
-        </div>
-        </div>
-    </div>
 
     {% endblock content %}
-

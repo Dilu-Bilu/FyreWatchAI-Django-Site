@@ -4,10 +4,11 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
-from AI.views import AIClassificationView
+from AI.views import AIClassificationView, AIInputView
 
 urlpatterns = [
     path("", AIClassificationView.as_view(), name="home"),
+     path("input/", AIInputView.as_view(), name="input"),
     path(
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
     ),
