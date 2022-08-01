@@ -37,43 +37,46 @@
   <body>
 
     <div class="mb-1">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
+      <nav class="navbar navbar-expand-md navbar-light  " style ='background-color: rgb(232, 188, 174);'>
         <div class="container-fluid">
           <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'home' %}">FyreWatchAI</a>
+          <a class="navbar-brand" href="{% url 'home' %}"><h1>FyreWatchAI </h1></a>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav justify-content-end">
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Home <span class="visually-hidden">(current)</span></a>
+                <a class="nav-link" href="{% url 'home' %}"><h4>Home</h4> <span class="visually-hidden">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'input' %}">Input</a>
+                <a class="nav-link" href="{% url 'api' %}"><h4>AI</h4></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
+                <a class="nav-link" href="{% url 'input' %}"><h4>Input</h4></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}"><h4>About</h4></a>
               </li>
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
                   {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% translate "My Profile" %}</a>
+                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}"><h4>{% translate "My Profile" %}</h4></a>
                 </li>
                 <li class="nav-item">
                   {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a>
+                  <a class="nav-link" href="{% url 'account_logout' %}"><h4>{% translate "Sign Out" %}</h4></a>
                 </li>
               {% else %}
                 {% if ACCOUNT_ALLOW_REGISTRATION %}
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% translate "Sign Up" %}</a>
+                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}"><h4>{% translate "Sign Up" %}</h4></a>
               </li>
               {% endif %}
                 <li class="nav-item">
                   {# URL provided by django-allauth/account/urls.py #}
-                  <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% translate "Sign In" %}</a>
+                  <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}"><h4>{% translate "Sign In" %}</h4></a>
                 </li>
               {% endif %}
             </ul>

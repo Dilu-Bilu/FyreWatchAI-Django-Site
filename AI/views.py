@@ -24,7 +24,7 @@ from .forms import FyreForm, InputForm
 #do something
 # Create your views here.
 class AIClassificationView(View):
-    template_name = "pages/home.html"
+    template_name = "pages/API.html"
 
     def make_histogram(request, cluster):
         """
@@ -147,7 +147,7 @@ class AIClassificationView(View):
                     ]
                 )
                 # writer.writerow([0.071, 3.33, 6.38, 11.18, 85, 220, 191, 188])
-
+            
             # neural network
             dataset = pd.read_csv("weather_data.csv")
             dataset.head()
@@ -156,7 +156,7 @@ class AIClassificationView(View):
             X.head()
             obj = StandardScaler()
             X = obj.fit_transform(X)
-            model = keras.models.load_model("AI/model_deployment.h5")
+            model = keras.models.load_model("AI/model7.h5")
             y_pred = model.predict(X)
             
             for prediction in y_pred:
@@ -224,7 +224,6 @@ class AIInputView(View):
                     ]
                 )
                 # writer.writerow([0.071, 3.33, 6.38, 11.18, 85, 220, 191, 188])
-
             # neural network
             dataset = pd.read_csv("weather_data2.csv")
             dataset.head()
@@ -233,7 +232,7 @@ class AIInputView(View):
             X.head()
             obj = StandardScaler()
             X = obj.fit_transform(X)
-            model = keras.models.load_model("AI/model_deployment.h5")
+            model = keras.models.load_model("AI/model7.h5")
             y_pred = model.predict(X)
             prediction = 0
             li = []
