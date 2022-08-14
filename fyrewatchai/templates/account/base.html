@@ -2,9 +2,11 @@
 {% block title %}{% block head_title %}{% endblock head_title %}{% endblock title %}
 
 {% block content %}
-<div class="row">
-  <div class="col-md-6 offset-md-3">
+<main role="main" style ='background: linear-gradient(to bottom, #ffffff 0%, #000000 100%);'>
+<div class="row py-5">
+  <div class="col-md-4 offset-md-4 bg-light rounded">
     {% block inner %}{% endblock %}
   </div>
 </div>
+</main>
 {% endblock %}

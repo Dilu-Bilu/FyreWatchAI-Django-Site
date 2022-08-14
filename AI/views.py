@@ -24,7 +24,7 @@ from .forms import FyreForm, InputForm
 #do something
 # Create your views here.
 class AIClassificationView(View):
-    template_name = "pages/API.html"
+    template_name = "pages/input.html"
 
     def make_histogram(request, cluster):
         """
@@ -162,18 +162,24 @@ class AIClassificationView(View):
             for prediction in y_pred:
                 if prediction > 0.96:
                     status = "Danger: Risk of Fire"
-                    messages.warning(
-                        self.request, "High Risk Of Wild Fire | Action is advised"
-                    )
+                    
                 elif prediction < 0.96:
                     status = "Low Danger: Low Risk of Fire"
-                    messages.success(self.request, "Everything is alright!")
+                    
                 else:
                     status = "try something else"
                     messages.success(self.request, "something is up")
             context = {
                 "form": form,
                 "status": status,
+                "soil_temp": soil_temp,
+                "Soil_moisture": soil_moist,
+                "temp": temp,
+                "wind": wind_speed, 
+                "humidity": humidity,
+                "kmeansR": kmeansR,
+                "kmeansG": KmeansG,
+                "kmeansB": kmeansB,
             }
 
         else:
@@ -202,6 +208,7 @@ class AIInputView(View):
             kmeansR = form.cleaned_data.get('kmeansR')
             kmeansG = form.cleaned_data.get('kmeansG')
             kmeansB = form.cleaned_data.get('kmeansB')
+            choice = form.cleaned_data.get('model_name')
     
             data_labels_row = "SoilMoisture, SoilTemperature, Temperature, Wind Speed, Humidity, kmeansr, kmeansg, kmeansb"
 
@@ -232,7 +239,8 @@ class AIInputView(View):
             X.head()
             obj = StandardScaler()
             X = obj.fit_transform(X)
-            model = keras.models.load_model("AI/model7.h5")
+            model_str = "AI/" + choice 
+            model = keras.models.load_model(model_str)
             y_pred = model.predict(X)
             prediction = 0
             li = []
@@ -240,15 +248,13 @@ class AIInputView(View):
             for prediction in y_pred:
                 if prediction[0] > 0.96:
                     status = "Danger: Risk of Fire"
-                    messages.warning(
-                        self.request, "High Risk Of Wild Fire | Action is advised"
-                    )
+                    
                 elif prediction[0] < 0.96:
                     status = "Low Danger: Low Risk of Fire"
-                    messages.success(self.request, "Everything is alright!")
+                   
                 else:
                     status = "try something else"
-                    messages.success(self.request, "something is up")
+                    
                 li.append(prediction[0])
                 
 
@@ -258,6 +264,14 @@ class AIInputView(View):
                 "form": form,
                 "status": status,
                 "prediction": prediction,
+                "soil_temp": soil_temp,
+                "Soil_moisture": soil_moist,
+                "temp": temp,
+                "wind": wind_speed, 
+                "humidity": humidity,
+                "kmeansR": kmeansR,
+                "kmeansG": kmeansG,
+                "kmeansB": kmeansB,
             }
 
         else:

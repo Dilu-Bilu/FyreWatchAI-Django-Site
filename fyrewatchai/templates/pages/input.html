@@ -2,26 +2,147 @@
 {% block content %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% if prediction %}
+
+{% if status == "Danger: Risk of Fire" %}
+<style type ='text/css'>
+     .bg_image {
+     background-image: url("{% static 'images/fire-44.gif' %}") ;
+     height: 100vh;
+     background-repeat: no-repeat;
+     
+   
+    
+  }
+  .bg_color {
+    /* background-image: url("{% static 'images/BigSur.png' %}");
+    background-repeat: no-repeat; */
+    background: white;
+ }
+</style>
 
 
-        <div class ='col pt-5 mt-5'>
-            <H5> Input The Raw Values in This Form</H5>
-            <div class= 'container pt-4 p-0'>
-            <form  action = "." method = "POST" enctype = 'multipart/form-data'> {% csrf_token%}
-                {{ form.as_p}}
-                <input class ='btn btn-primary btn-lg btn-block'type = "submit" value = "Analyse"/>
-            </form>
-        
+{%elif status == "Low Danger: Low Risk of Fire"%}
+
+<style type ='text/css'>
+    .bg_image {
+    /* background-image: url("{% static 'images/BigSur.png' %}");
+    background-repeat: no-repeat; */
+    background: linear-gradient(to top right, #00ccff 0%, #99ff66 100%);
+ }
+    .bg_color {
+    /* background-image: url("{% static 'images/BigSur.png' %}");
+    background-repeat: no-repeat; */
+    background-color: white;
+ }
+</style>
+
+{%endif%}
+
+{% if status == "Danger: Risk of Fire" %}
+
+<main role="main" class="p-5" style="
+    background: linear-gradient(to bottom left, #000066 0%, #ff3300 100%);
+    height: 100vh;
+">
+    <div class="row ">
+        <div class="col-sm-8 justify-content-bottom align-items-end">
+            <div class="container  " style ="padding-top: 200px">
+                <h1 class="display-3 text-white">Fire Conditions Detected!</h1>
+                <p class="text-white">Fire conditions have been detected by the AI, making investigation at the given coordinates recommended. These are the readings given by our APIs:</p>
+                <p><a class="btn btn-lg text-white" style="background-color: #000066;"href="{% url 'input' %}" role="button">Analyze Again &raquo;</a></p>
+              </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="container bg_color opacity-25 rounded">
+                <div class="container p-5">
+                    <h2 class="text-black"> Data Analyzed and Collected by APIs</h2>
+                    <hr class="my-3">
+                    <h4 class="text-black"> Coordinates: (x,y)</h4>
+                    <hr>
+                    <h4 class="text-black"> Soil Temperature: {{soil_temp}}˙C</h4>
+                    <hr>
+                    <h4 class="text-black"> Soil Moisture: {{Soil_moisture}}</h4>
+                    <hr>
+                    <h4 class="text-black"> Temperature: {{temp}}˙C</h4>
+                    <hr>
+                    <h4 class="text-black"> Humidity: {{humidity}}%</h4>
+                    <hr> 
+                    <h4 class="text-black"> Wind Speed: {{wind}}m/s</h4>
+                    <hr>
+                    <h4 class="text-black"> KmeansRGB: ({{kmeansR}},{{kmeansG}}, {{kmeansB}})</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+    {%elif status == "Low Danger: Low Risk of Fire"%}
+    <main role="main" class="p-5" style="
+    background: linear-gradient(to top right, #ccff33 0%, #339966 100%);
+    height: 100vh;
+">
+    <div class="row ">
+        <div class="col-sm-8 justify-content-bottom align-items-end">
+            <div class="container  " style ="padding-top: 200px">
+                <h1 class="display-3 text-white">Fire Conditions Not Detected | Everything is Normal</h1>
+                <p class="text-white">Fire conditions have not been detected by the AI, making investigation at the given coordinates unneccesary. These are the readings given by our APIs:</p>
+                <p><a class="btn btn-lg btn-primary" href="{% url 'input' %}" role="button">Analyze Again &raquo;</a></p>
+              </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="container bg_color opacity-25 rounded">
+                <div class="container p-5">
+                    <h2 class="text-black"> Data Analyzed and Collected by APIs</h2>
+                    <hr class="my-3">
+                    <h4 class="text-black"> Coordinates: (x,y)</h4>
+                    <hr>
+                    <h4 class="text-black"> Soil Temperature: {{soil_temp}}˙C</h4>
+                    <hr>
+                    <h4 class="text-black"> Soil Moisture: {{Soil_moisture}}</h4>
+                    <hr>
+                    <h4 class="text-black"> Temperature: {{temp}}˙C</h4>
+                    <hr>
+                    <h4 class="text-black"> Humidity: {{humidity}}%</h4>
+                    <hr> 
+                    <h4 class="text-black"> Wind Speed: {{wind}}m/s</h4>
+                    <hr>
+                    <h4 class="text-black"> KmeansRGB: ({{kmeansR}},{{kmeansG}}, {{kmeansB}})</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+    {%endif%}
+
+
+{% endif %}
+<main role="main" style ='background: linear-gradient(to top, #ffffff 0%, #000000 100%);'>
+
+    {%if not prediction%}
+    <div class="container py-5" style ='background: linear-gradient(to top, #ffffff 0%, #000000 100%)'>
+        <div class ='col-md-6 offset-md-3 pt-5 bg-white rounded border'>
+            <h1 class = 'py-4 display-1 m-5'> Input  Raw Values in This Form</h1>
+            <hr class="">
+            <div class= 'container p-5'>
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-dark btn-lg btn-block">Analyze</button>
+                  </form>
+                  
+                  {% endif%}
            
             
             </div>
         </div>
-        <div class = 'container'>
-            {% if prediction %}
-            <h1> Your prediction is : {{prediction}}</h1> 
-            
-            {% endif %}
-            {{status}}
-        </div>
-
+        
+           
+           
+    </div>
+</main>
     {% endblock content %}

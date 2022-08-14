@@ -1,10 +1,15 @@
 from django import forms
 
-
+OPTIONS = (
+    ("model_deployment.h5", "model_deployment.h5"),
+    ("model7.h5","model7.h5"),
+    ("model2.h5","model2.h5"),
+    ("model1.h5","model1.h5"),
+)
 class FyreForm(forms.Form):
     image = forms.ImageField()
-    latitude = forms.IntegerField()
-    longitude = forms.IntegerField()
+    latitude = forms.FloatField()
+    longitude = forms.FloatField()
 
 class InputForm(forms.Form):
     Soil_moisture = forms.FloatField()
@@ -15,3 +20,5 @@ class InputForm(forms.Form):
     kmeansR = forms.IntegerField()
     kmeansG = forms.IntegerField()
     kmeansB = forms.IntegerField()
+    model_name = forms.ChoiceField(widget=forms.RadioSelect,
+                                         choices=OPTIONS)
