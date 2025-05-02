@@ -242,6 +242,7 @@ class AIInputView(View):
             model_str = "AI/" + choice 
             model = keras.models.load_model(model_str)
             y_pred = model.predict(X)
+            print(y_pred)
             prediction = 0
             li = []
             
